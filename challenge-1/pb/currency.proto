@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+service ConversionService {
+  rpc ConvertCurrency(TransactionRequest) returns (TransactionResponse) {}
+  rpc ConvertCurrencies(TransactionsRequest) returns (TransactionResponse) {}
+  rpc Rates(RateRequest) returns (RateResponse) {}
+}
+
+message TransactionRequest {
+  string from  = 1;
+  string to = 2;
+  float amount = 3;
+  string user_id = 4;
+  google.protobuf.Timestamp timestamp = 5;
+}
+
+message TransactionsRequest {
+  repeated TransactionRequest transactions = 1;
+}
+
+message TransactionResponse {
+  bool successful = 1;
+  string error = 2;
+}
+
+message Rate {
+  string source = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  map<string, float> quotes = 3;
+}
+
+message RateRequest {
+  uint32 per_page = 1;
+  string page = 2;
+}
+
+message RateResponse {
+  repeated Rate rates = 1;
+  string error = 2;
+}

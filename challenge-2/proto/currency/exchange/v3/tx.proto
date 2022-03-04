@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "sologenic-challenge/challenge-2/x/exchange";
+
+service Account {
+  rpc FreezeToken(Token) returns (Response) {}
+  rpc UnFreezeToken(Token) returns (Response) {}
+}
+
+message Token {
+  string id = 1;
+}
+
+message Response {
+  string error = 1;
+}
